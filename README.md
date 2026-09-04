@@ -1,15 +1,38 @@
 # ACT Hexaflex Mapper
 
-This is an open-source case formulation support tool for clinical psychologists and mental health professionals, based on the Acceptance and Commitment Therapy (ACT) "Hexaflex" model. 
+ACT（アクセプタンス＆コミットメント・セラピー）の6つのプロセスを手がかりに、観察内容とケースフォーミュレーション上の仮説を整理するためのオープンソース・プロトタイプです。
 
-## Overview
-This single-page web application allows therapists to visually map a client's chief complaints and problem behaviors onto the 6 core processes of psychological flexibility/inflexibility. 
-It is designed to be fully client-side (using LocalStorage) to ensure strict privacy and HIPAA/PHI compliance. No data is sent to external servers.
+## 現在の機能
 
-## Current Status
-This project is currently in the prototype phase. I am actively working on adding detailed clinical data, metaphors, and defusion exercises based on professional psychological literature to the `data_hints.js` file.
+- 利用目的、限界、匿名化に関する利用前確認
+- ACTの6つのプロセスの概要表示
+- HTML・CSS・JavaScriptだけで動作
+- AI、外部API、外部通信を使用しないローカル構成
 
----
-## 概要（日本語）
-臨床心理士などの専門職向けに作成された、ACT（アクセプタンス＆コミットメント・セラピー）のヘキサフレックスを用いたケースフォーミュレーション支援ツールです。
-現在プロトタイプ段階であり、今後、各コアプロセスの詳細な臨床データや代替行動のナレッジを追加・更新していく予定です。
+現段階では匿名・架空ケースだけを対象とします。診断、緊急性の判断、治療方針の自動決定には使用しません。また、端末内で動作することだけでは、HIPAAを含む法令や組織基準への準拠は保証されません。
+
+## 起動方法
+
+1. このリポジトリをダウンロードまたはクローンします。
+2. `index.html` を対応ブラウザで開きます。
+3. 利用前確認を読み、同意欄を選択して開始します。
+
+ビルド、パッケージのインストール、Webサーバーは不要です。
+
+## ファイル構成
+
+- `index.html`：画面の構造と利用前確認
+- `styles.css`：画面デザインとレスポンシブ対応
+- `app.js`：利用前確認とプロセス表示の制御
+- `data_hints.js`：ACTプロセスとモデル事例のコンテンツ
+
+## 開発方針
+
+- 自動診断や未検証のスコアを提供しない
+- 観察事実、本人の言葉、支援者の仮説を区別する
+- 本人との共同検討を中心にする
+- 実在ケースを扱う前に、別途プライバシー・セキュリティ・運用面を審査する
+
+## English summary
+
+ACT Hexaflex Mapper is a client-side prototype for organizing observations and case-formulation hypotheses using the six ACT processes. It currently provides a pre-use safety notice and a read-only overview of the six processes. It does not provide diagnosis or automated treatment recommendations, and the current version is limited to anonymous or fictional cases.

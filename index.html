@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    >
+    <meta
+      name="description"
+      content="ACTの6つのプロセスを用いた、ローカル完結型のケースフォーミュレーション支援ツール"
+    >
+    <title>ACT Hexaflex Mapper</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+
+    <header class="site-header">
+      <div class="brand" aria-label="ACT Hexaflex Mapper">
+        <span class="brand-mark" aria-hidden="true">六</span>
+        <span>
+          <strong>ACT Hexaflex Mapper</strong>
+          <small>対話のためのケース整理ツール</small>
+        </span>
+      </div>
+      <span class="local-badge">
+        <span class="status-dot" aria-hidden="true"></span>
+        この端末内で動作
+      </span>
+    </header>
+
+    <main id="main-content">
+      <section id="welcome-view" class="welcome-view" aria-labelledby="welcome-title">
+        <div class="welcome-copy">
+          <p class="eyebrow">はじめる前に</p>
+          <h1 id="welcome-title">診断ではなく、<br>理解を深めるための地図。</h1>
+          <p class="lead">
+            ACTの6つのプロセスを手がかりに、観察したことと仮説を整理し、
+            本人との共同検討を支援します。
+          </p>
+
+          <div class="principle-list" aria-label="このツールの3つの原則">
+            <article>
+              <span aria-hidden="true">01</span>
+              <div>
+                <h2>診断・判定をしません</h2>
+                <p>点数や自動判定ではなく、対話のための仮説を整理します。</p>
+              </div>
+            </article>
+            <article>
+              <span aria-hidden="true">02</span>
+              <div>
+                <h2>外部へ送信しません</h2>
+                <p>AIや外部APIを使用せず、すべての処理をこの端末内で行います。</p>
+              </div>
+            </article>
+            <article>
+              <span aria-hidden="true">03</span>
+              <div>
+                <h2>本人の言葉を中心にします</h2>
+                <p>観察事実と支援者の仮説を区別し、共同で見直すことを前提にします。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <aside class="consent-card" aria-labelledby="consent-title">
+          <div class="card-heading">
+            <p class="eyebrow">利用前確認</p>
+            <h2 id="consent-title">安全に利用するために</h2>
+          </div>
+
+          <div class="notice notice-warning">
+            <span class="notice-icon" aria-hidden="true">!</span>
+            <p>
+              現在は匿名・架空ケース専用です。氏名、住所、連絡先、生年月日など、
+              個人を特定できる情報は入力しないでください。
+            </p>
+          </div>
+
+          <ul class="check-list">
+            <li>医療上の診断、緊急性の判断、治療方針の決定には使用しません。</li>
+            <li>緊急時には本ツールを使わず、地域の緊急窓口や医療機関へ連絡してください。</li>
+            <li>端末内での動作は、法令や組織基準への準拠を自動的に保証するものではありません。</li>
+          </ul>
+
+          <label class="agreement">
+            <input id="agreement-checkbox" type="checkbox">
+            <span>
+              上記を読み、匿名・架空ケースのみを使用することを確認しました。
+            </span>
+          </label>
+
+          <button id="start-button" class="primary-button" type="button" disabled>
+            マップの準備をはじめる
+            <span aria-hidden="true">→</span>
+          </button>
+          <p id="agreement-help" class="button-help">確認項目への同意後に進めます。</p>
+        </aside>
+      </section>
+
+      <section id="workspace-view" class="workspace-view" aria-labelledby="workspace-title" hidden>
+        <div class="workspace-intro">
+          <div>
+            <p class="eyebrow">準備完了</p>
+            <h1 id="workspace-title" tabindex="-1">6つの視点から、丁寧に見立てる。</h1>
+            <p>
+              各プロセスは採点項目ではありません。複数の視点を行き来しながら、
+              観察と仮説を共同で検討します。
+            </p>
+          </div>
+          <button id="return-button" class="secondary-button" type="button">利用前確認へ戻る</button>
+        </div>
+
+        <div id="process-grid" class="process-grid" aria-label="ACTの6つのプロセス"></div>
+
+        <div class="next-step">
+          <span aria-hidden="true">次</span>
+          <div>
+            <h2>ケース概要の入力</h2>
+            <p>次の開発項目で、匿名ケースの概要と本人が望む変化を記録できるようにします。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>ACT Hexaflex Mapper — 専門家と本人の共同検討を支援するオープンソース・プロトタイプ</p>
+    </footer>
+
+    <script src="data_hints.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
