@@ -292,11 +292,76 @@
                 <p id="case-form-status" class="form-status" role="status" aria-live="polite"></p>
               </div>
               <button class="primary-button form-submit" type="submit">
-                入力内容を確認
-                <span aria-hidden="true">✓</span>
+                6つの視点へマッピング
+                <span aria-hidden="true">→</span>
               </button>
             </div>
           </form>
+        </div>
+      </section>
+
+      <section id="map-view" class="map-view" aria-labelledby="map-title" hidden>
+        <div class="case-header">
+          <button id="map-back-button" class="text-button" type="button">← ケース概要へ戻る</button>
+          <span class="temporary-badge">保存されない一時マップ</span>
+        </div>
+
+        <div class="map-heading">
+          <div>
+            <p class="eyebrow">ヘキサフレックス・マップ</p>
+            <h1 id="map-title" tabindex="-1">6つの視点を、つなげて考える。</h1>
+            <p>各プロセスは点数ではありません。観察と仮説を分け、関連する視点も記録します。</p>
+          </div>
+          <div class="map-progress" aria-live="polite">
+            <strong id="mapped-count">0 / 6</strong>
+            <span>入力したプロセス</span>
+          </div>
+        </div>
+
+        <div class="map-layout">
+          <nav id="map-process-nav" class="map-process-nav" aria-label="マッピングするACTプロセス"></nav>
+
+          <article class="map-editor" aria-labelledby="map-process-title">
+            <div class="map-process-heading">
+              <span id="map-process-number">01</span>
+              <div>
+                <p id="map-process-en" class="process-en"></p>
+                <h2 id="map-process-title"></h2>
+                <p id="map-process-description"></p>
+              </div>
+            </div>
+
+            <div class="map-fields">
+              <div class="field field-observation">
+                <label for="map-observation">
+                  この視点で観察した事実
+                  <span class="field-tag">確認できたこと</span>
+                </label>
+                <textarea id="map-observation" rows="5" maxlength="1200" placeholder="行動・状況・頻度など、確認できた事実を記録します"></textarea>
+                <div class="field-meta"><small>診断名や評価ではなく、観察可能な内容を記します。</small><small><span id="map-observation-count">0</span>/1200</small></div>
+              </div>
+
+              <div class="field field-hypothesis">
+                <label for="map-hypothesis">
+                  この視点からの仮説
+                  <span class="field-tag">共同確認が必要</span>
+                </label>
+                <textarea id="map-hypothesis" rows="5" maxlength="1200" placeholder="〜の可能性がある、という修正可能な形で記録します"></textarea>
+                <div class="field-meta"><small>事実として断定せず、本人と一緒に確かめます。</small><small><span id="map-hypothesis-count">0</span>/1200</small></div>
+              </div>
+            </div>
+
+            <fieldset class="relation-fieldset">
+              <legend>関連して検討したい他のプロセス</legend>
+              <p>複数選択できます。因果関係を断定するものではありません。</p>
+              <div id="relation-options" class="relation-options"></div>
+            </fieldset>
+
+            <div class="map-editor-footer">
+              <p id="map-status" role="status" aria-live="polite">入力はこの画面を開いている間だけ保持されます。</p>
+              <button id="clear-process-button" class="danger-text-button" type="button">このプロセスの入力を消去</button>
+            </div>
+          </article>
         </div>
       </section>
     </main>
