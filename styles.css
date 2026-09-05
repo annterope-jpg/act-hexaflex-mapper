@@ -158,6 +158,10 @@ p {
   margin-top: 0;
 }
 
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 h1 {
   max-width: 15ch;
   margin-bottom: 1.4rem;
@@ -423,15 +427,23 @@ h1 {
 
 .next-step {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: 1rem;
   align-items: center;
+  width: 100%;
   margin-top: 1rem;
   padding: 1.3rem;
   color: #6d604c;
   background: #f4eee3;
   border: 1px dashed #cdbd9f;
   border-radius: 1rem;
+  text-align: left;
+}
+
+.next-step:hover {
+  color: var(--ink);
+  background: #eee5d5;
+  border-color: #aa9062;
 }
 
 .next-step > span {
@@ -445,15 +457,295 @@ h1 {
   font-weight: 800;
 }
 
-.next-step h2 {
+.next-step strong {
+  display: block;
   margin-bottom: 0.25rem;
   font-size: 0.95rem;
 }
 
-.next-step p {
-  margin: 0;
+.next-step small {
+  display: block;
   font-size: 0.8rem;
   line-height: 1.6;
+}
+
+.next-arrow {
+  color: var(--teal);
+  font-size: 1.25rem;
+}
+
+.case-view {
+  min-height: calc(100vh - 170px);
+  padding: 2rem 0 4rem;
+}
+
+.case-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+}
+
+.text-button,
+.danger-text-button {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-weight: 700;
+}
+
+.text-button {
+  color: var(--teal);
+}
+
+.text-button:hover {
+  color: var(--teal-dark);
+  text-decoration: underline;
+}
+
+.temporary-badge {
+  padding: 0.45rem 0.75rem;
+  color: #6d604c;
+  background: #f4eee3;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.case-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.55fr) minmax(0, 1.2fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.case-intro {
+  position: sticky;
+  top: 2rem;
+}
+
+.case-intro h1 {
+  max-width: 10ch;
+  font-size: clamp(2.6rem, 4.5vw, 4.5rem);
+}
+
+.privacy-note {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.privacy-note > span {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  color: var(--teal-dark);
+  background: var(--mint);
+  border-radius: 50%;
+  place-items: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.privacy-note h2 {
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.privacy-note p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.case-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-section {
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  background: rgb(255 255 255 / 92%);
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 30px rgb(20 54 49 / 5%);
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.6rem;
+}
+
+.section-heading > span {
+  padding-top: 0.15rem;
+  color: var(--teal);
+  font-family: Georgia, serif;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.section-heading h2 {
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.65fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.field {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f7f9f7;
+  border: 1px solid transparent;
+  border-radius: 0.9rem;
+}
+
+.field-grid .field {
+  margin-top: 0;
+}
+
+.field-client {
+  background: #f4f7fb;
+  border-color: #dce5ef;
+}
+
+.field-observation {
+  background: #f2f8f4;
+  border-color: #d5e7dc;
+}
+
+.field-hypothesis {
+  background: #fbf6ee;
+  border-color: #eadeca;
+}
+
+.field label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.field-tag {
+  padding: 0.25rem 0.5rem;
+  color: var(--muted);
+  background: rgb(255 255 255 / 70%);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid #bac9c4;
+  border-radius: 0.65rem;
+}
+
+.field input {
+  min-height: 2.9rem;
+  padding: 0 0.85rem;
+}
+
+.field textarea {
+  min-height: 7rem;
+  padding: 0.75rem 0.85rem;
+  line-height: 1.65;
+  resize: vertical;
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-color: #839b94;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--focus);
+  outline: 3px solid rgb(21 101 192 / 18%);
+}
+
+.field input[aria-invalid="true"] {
+  border-color: #b63c32;
+  outline: 3px solid rgb(182 60 50 / 15%);
+}
+
+.field-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.45rem;
+  color: var(--muted);
+}
+
+.field-meta small {
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.field-meta small:last-child {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.field-error {
+  margin: 0.45rem 0 0;
+  color: #9d2f27;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.danger-text-button {
+  color: #9d2f27;
+  font-size: 0.78rem;
+}
+
+.danger-text-button:hover {
+  text-decoration: underline;
+}
+
+.form-status {
+  max-width: 32rem;
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.form-submit {
+  width: auto;
+  min-width: 13rem;
 }
 
 footer {
@@ -488,6 +780,18 @@ footer p {
     align-items: start;
     flex-direction: column;
   }
+
+  .case-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .case-intro {
+    position: static;
+  }
+
+  .case-intro h1 {
+    max-width: 14ch;
+  }
 }
 
 @media (max-width: 560px) {
@@ -513,6 +817,33 @@ footer p {
 
   .process-grid {
     grid-template-columns: 1fr;
+  }
+
+  .case-header,
+  .form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .case-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .temporary-badge {
+    align-self: flex-start;
+  }
+
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field label {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-submit {
+    width: 100%;
   }
 }
 

@@ -116,12 +116,187 @@
 
         <div id="process-grid" class="process-grid" aria-label="ACTの6つのプロセス"></div>
 
-        <div class="next-step">
+        <button id="case-start-button" class="next-step" type="button">
           <span aria-hidden="true">次</span>
-          <div>
-            <h2>ケース概要の入力</h2>
-            <p>次の開発項目で、匿名ケースの概要と本人が望む変化を記録できるようにします。</p>
+          <span>
+            <strong>匿名ケース概要の入力</strong>
+            <small>本人の言葉、観察事実、支援者の仮説を分けて記録します。</small>
+          </span>
+          <span class="next-arrow" aria-hidden="true">→</span>
+        </button>
+      </section>
+
+      <section id="case-view" class="case-view" aria-labelledby="case-title" hidden>
+        <div class="case-header">
+          <button id="case-back-button" class="text-button" type="button">← 6つの視点へ戻る</button>
+          <span class="temporary-badge">保存されない一時入力</span>
+        </div>
+
+        <div class="case-layout">
+          <div class="case-intro">
+            <p class="eyebrow">匿名ケース概要</p>
+            <h1 id="case-title" tabindex="-1">事実と仮説を、分けて置く。</h1>
+            <p class="lead">
+              本人が語ったこと、実際に観察したこと、支援者が考えたことを混ぜずに記録します。
+              空欄があっても構いません。
+            </p>
+
+            <aside class="privacy-note" aria-labelledby="privacy-note-title">
+              <span aria-hidden="true">匿名</span>
+              <div>
+                <h2 id="privacy-note-title">個人を特定できる情報は入力しない</h2>
+                <p>氏名、イニシャル、住所、連絡先、生年月日、勤務先・学校名などは記載しないでください。</p>
+              </div>
+            </aside>
           </div>
+
+          <form id="case-form" class="case-form" novalidate>
+            <div class="form-section">
+              <div class="section-heading">
+                <span>01</span>
+                <div>
+                  <h2>ケースの識別と文脈</h2>
+                  <p>個人名ではなく、この端末上だけで使う任意の符号を付けます。</p>
+                </div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="case-id">匿名ケースID <span aria-hidden="true">*</span></label>
+                  <input
+                    id="case-id"
+                    name="caseId"
+                    type="text"
+                    maxlength="40"
+                    autocomplete="off"
+                    placeholder="例：CASE-001"
+                    aria-describedby="case-id-help case-id-error"
+                    required
+                  >
+                  <div class="field-meta">
+                    <small id="case-id-help">氏名やイニシャルは使わないでください。</small>
+                    <small><span data-count-for="case-id">0</span>/40</small>
+                  </div>
+                  <p id="case-id-error" class="field-error" role="alert" hidden>匿名ケースIDを入力してください。</p>
+                </div>
+
+                <div class="field">
+                  <label for="case-context">検討する場面・文脈</label>
+                  <textarea
+                    id="case-context"
+                    name="context"
+                    rows="4"
+                    maxlength="500"
+                    placeholder="例：対人場面で困難が生じる状況を検討する"
+                  ></textarea>
+                  <div class="field-meta">
+                    <small>必要な範囲だけ、一般化して記載します。</small>
+                    <small><span data-count-for="case-context">0</span>/500</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-heading">
+                <span>02</span>
+                <div>
+                  <h2>本人と一緒に確かめる内容</h2>
+                  <p>引用、観察、仮説をそれぞれ別の欄に記録します。</p>
+                </div>
+              </div>
+
+              <div class="field field-client">
+                <label for="client-words">
+                  本人の言葉
+                  <span class="field-tag">本人の表現</span>
+                </label>
+                <textarea
+                  id="client-words"
+                  name="clientWords"
+                  rows="4"
+                  maxlength="1000"
+                  placeholder="本人が実際に話した内容を、匿名性を保って記録します"
+                ></textarea>
+                <div class="field-meta">
+                  <small>解釈を加えず、できるだけ本人の表現を保ちます。</small>
+                  <small><span data-count-for="client-words">0</span>/1000</small>
+                </div>
+              </div>
+
+              <div class="field field-observation">
+                <label for="observations">
+                  観察した事実
+                  <span class="field-tag">確認できたこと</span>
+                </label>
+                <textarea
+                  id="observations"
+                  name="observations"
+                  rows="4"
+                  maxlength="1000"
+                  placeholder="行動、状況、頻度など、確認できたことを記録します"
+                ></textarea>
+                <div class="field-meta">
+                  <small>評価語を避け、「いつ・どこで・何が起きたか」を記します。</small>
+                  <small><span data-count-for="observations">0</span>/1000</small>
+                </div>
+              </div>
+
+              <div class="field field-hypothesis">
+                <label for="hypotheses">
+                  支援者の仮説
+                  <span class="field-tag">未確認の見立て</span>
+                </label>
+                <textarea
+                  id="hypotheses"
+                  name="hypotheses"
+                  rows="4"
+                  maxlength="1000"
+                  placeholder="例：〜が影響している可能性がある（本人との確認が必要）"
+                ></textarea>
+                <div class="field-meta">
+                  <small>事実として断定せず、共同検討で修正できる形にします。</small>
+                  <small><span data-count-for="hypotheses">0</span>/1000</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-heading">
+                <span>03</span>
+                <div>
+                  <h2>本人が望む変化</h2>
+                  <p>症状をなくすことだけでなく、どのように過ごしたいかを記録します。</p>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="desired-change">望む変化・大切にしたい方向</label>
+                <textarea
+                  id="desired-change"
+                  name="desiredChange"
+                  rows="4"
+                  maxlength="1000"
+                  placeholder="例：不安があっても、大切な人との時間に参加したい"
+                ></textarea>
+                <div class="field-meta">
+                  <small>本人との共同確認がまだの場合は、そのことも記します。</small>
+                  <small><span data-count-for="desired-change">0</span>/1000</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div>
+                <button id="clear-case-button" class="danger-text-button" type="button">入力内容を消去</button>
+                <p id="case-form-status" class="form-status" role="status" aria-live="polite"></p>
+              </div>
+              <button class="primary-button form-submit" type="submit">
+                入力内容を確認
+                <span aria-hidden="true">✓</span>
+              </button>
+            </div>
+          </form>
         </div>
       </section>
     </main>
