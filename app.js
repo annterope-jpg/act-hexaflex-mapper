@@ -4,6 +4,7 @@ const welcomeView = document.querySelector("#welcome-view");
 const workspaceView = document.querySelector("#workspace-view");
 const caseView = document.querySelector("#case-view");
 const mapView = document.querySelector("#map-view");
+const actionView = document.querySelector("#action-view");
 const agreementCheckbox = document.querySelector("#agreement-checkbox");
 const agreementHelp = document.querySelector("#agreement-help");
 const startButton = document.querySelector("#start-button");
@@ -26,6 +27,13 @@ const mapHypothesisCount = document.querySelector("#map-hypothesis-count");
 const relationOptions = document.querySelector("#relation-options");
 const clearProcessButton = document.querySelector("#clear-process-button");
 const mapStatus = document.querySelector("#map-status");
+const actionStartButton = document.querySelector("#action-start-button");
+const actionBackButton = document.querySelector("#action-back-button");
+const actionForm = document.querySelector("#action-form");
+const valuedDirection = document.querySelector("#valued-direction");
+const smallAction = document.querySelector("#small-action");
+const clearActionButton = document.querySelector("#clear-action-button");
+const actionStatus = document.querySelector("#action-status");
 const mapDraft = new Map();
 let activeProcessId = "acceptance";
 
@@ -80,6 +88,7 @@ function showWorkspace() {
   welcomeView.hidden = true;
   caseView.hidden = true;
   mapView.hidden = true;
+  actionView.hidden = true;
   workspaceView.hidden = false;
   document.title = "準備完了 | ACT Hexaflex Mapper";
   workspaceView.querySelector("h1").focus({ preventScroll: true });
@@ -90,6 +99,7 @@ function showWelcome() {
   workspaceView.hidden = true;
   caseView.hidden = true;
   mapView.hidden = true;
+  actionView.hidden = true;
   welcomeView.hidden = false;
   document.title = "ACT Hexaflex Mapper";
   startButton.focus({ preventScroll: true });
@@ -100,6 +110,7 @@ function showCaseForm() {
   welcomeView.hidden = true;
   workspaceView.hidden = true;
   mapView.hidden = true;
+  actionView.hidden = true;
   caseView.hidden = false;
   document.title = "匿名ケース概要 | ACT Hexaflex Mapper";
   document.querySelector("#case-title").focus({ preventScroll: true });
@@ -233,6 +244,7 @@ function showMap() {
   workspaceView.hidden = true;
   caseView.hidden = true;
   mapView.hidden = false;
+  actionView.hidden = true;
   renderMapNavigation();
   selectMapProcess(activeProcessId);
   updateMapProgress();
@@ -247,6 +259,49 @@ function clearActiveProcess() {
   updateMapProgress();
   mapStatus.textContent = "このプロセスの入力を消去しました。";
   mapObservation.focus();
+}
+
+function showActionPlan() {
+  saveActiveProcess();
+  welcomeView.hidden = true;
+  workspaceView.hidden = true;
+  caseView.hidden = true;
+  mapView.hidden = true;
+  actionView.hidden = false;
+  document.title = "価値に沿った行動計画 | ACT Hexaflex Mapper";
+  document.querySelector("#action-title").focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function setActionFieldError(field, errorId, hasError) {
+  field.toggleAttribute("aria-invalid", hasError);
+  document.querySelector(errorId).hidden = !hasError;
+}
+
+function handleActionSubmit(event) {
+  event.preventDefault();
+  const missingValue = !valuedDirection.value.trim();
+  const missingAction = !smallAction.value.trim();
+  setActionFieldError(valuedDirection, "#valued-direction-error", missingValue);
+  setActionFieldError(smallAction, "#small-action-error", missingAction);
+  if (missingValue || missingAction) {
+    actionStatus.textContent = "必須項目を確認してください。";
+    (missingValue ? valuedDirection : smallAction).focus();
+    return;
+  }
+  actionStatus.textContent = "価値と小さな一歩を確認しました。入力は端末に保存されていません。";
+}
+
+function clearActionPlan() {
+  actionForm.reset();
+  actionForm.querySelectorAll("textarea[maxlength]").forEach((field) => {
+    const counter = document.querySelector(`#${field.id}-count`);
+    if (counter) counter.textContent = "0";
+  });
+  setActionFieldError(valuedDirection, "#valued-direction-error", false);
+  setActionFieldError(smallAction, "#small-action-error", false);
+  actionStatus.textContent = "行動計画を消去しました。";
+  valuedDirection.focus();
 }
 
 agreementCheckbox.addEventListener("change", updateAgreementState);
@@ -267,6 +322,18 @@ mapHypothesis.addEventListener("input", () => {
   saveActiveProcess();
 });
 clearProcessButton.addEventListener("click", clearActiveProcess);
+actionStartButton.addEventListener("click", showActionPlan);
+actionBackButton.addEventListener("click", showMap);
+actionForm.addEventListener("submit", handleActionSubmit);
+clearActionButton.addEventListener("click", clearActionPlan);
+[valuedDirection, smallAction].forEach((field) => {
+  field.addEventListener("input", () => {
+    const counter = document.querySelector(`#${field.id}-count`);
+    counter.textContent = String(field.value.length);
+    field.removeAttribute("aria-invalid");
+    document.querySelector(`#${field.id}-error`).hidden = true;
+  });
+});
 caseForm.querySelectorAll("textarea, input[maxlength]").forEach((field) => {
   field.addEventListener("input", () => updateCharacterCount(field));
   updateCharacterCount(field);

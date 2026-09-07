@@ -363,6 +363,65 @@
             </div>
           </article>
         </div>
+        <div class="map-next-row">
+          <button id="action-start-button" class="primary-button form-submit" type="button">
+            価値に沿った行動計画へ <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="action-view" class="action-view" aria-labelledby="action-title" hidden>
+        <div class="case-header">
+          <button id="action-back-button" class="text-button" type="button">← ヘキサフレックス・マップへ戻る</button>
+          <span class="temporary-badge">保存されない一時計画</span>
+        </div>
+
+        <div class="action-heading">
+          <p class="eyebrow">価値に沿った行動計画</p>
+          <h1 id="action-title" tabindex="-1">大切な方向へ、できる大きさで。</h1>
+          <p>価値は到着点ではなく方向です。困難がなくなるのを待たず、実行可能な小さな一歩を本人と一緒に考えます。</p>
+        </div>
+
+        <form id="action-form" class="action-form" novalidate>
+          <div class="action-grid">
+            <section class="form-section" aria-labelledby="value-section-title">
+              <div class="section-heading"><span>01</span><div><h2 id="value-section-title">大切にしたい方向</h2><p>達成して終わる目標ではなく、どのようにありたいかを言葉にします。</p></div></div>
+              <div class="field field-client">
+                <label for="valued-direction">価値・大切にしたいあり方 <span aria-hidden="true">*</span></label>
+                <textarea id="valued-direction" rows="4" maxlength="800" placeholder="例：身近な人に、誠実に関わる"></textarea>
+                <div class="field-meta"><small>本人の言葉で表現します。</small><small><span id="valued-direction-count">0</span>/800</small></div>
+                <p id="valued-direction-error" class="field-error" role="alert" hidden>大切にしたい方向を入力してください。</p>
+              </div>
+            </section>
+
+            <section class="form-section" aria-labelledby="step-section-title">
+              <div class="section-heading"><span>02</span><div><h2 id="step-section-title">最も小さな一歩</h2><p>具体的で、無理なく試せる行動にします。</p></div></div>
+              <div class="field field-observation">
+                <label for="small-action">試してみる行動 <span aria-hidden="true">*</span></label>
+                <textarea id="small-action" rows="4" maxlength="800" placeholder="例：夕食後に家族へ一言、今日の感謝を伝える"></textarea>
+                <div class="field-meta"><small>5分程度でも実行できる大きさを検討します。</small><small><span id="small-action-count">0</span>/800</small></div>
+                <p id="small-action-error" class="field-error" role="alert" hidden>試してみる行動を入力してください。</p>
+              </div>
+              <div class="field-grid action-details">
+                <div class="field"><label for="action-when">いつ・どこで</label><input id="action-when" type="text" maxlength="300" placeholder="例：次の平日、夕食後"></div>
+                <div class="field"><label for="review-when">振り返る時期</label><input id="review-when" type="text" maxlength="300" placeholder="例：次回面接の冒頭"></div>
+              </div>
+            </section>
+
+            <section class="form-section action-wide" aria-labelledby="support-section-title">
+              <div class="section-heading"><span>03</span><div><h2 id="support-section-title">困難を抱えながら進む準備</h2><p>障壁を排除する計画ではなく、予測して支えを用意します。</p></div></div>
+              <div class="field-grid">
+                <div class="field field-hypothesis"><label for="expected-barrier">予想される感情・思考・状況</label><textarea id="expected-barrier" rows="4" maxlength="800" placeholder="例：気まずい、失敗するという考え"></textarea></div>
+                <div class="field"><label for="helpful-support">役立ちそうな支援・工夫</label><textarea id="helpful-support" rows="4" maxlength="800" placeholder="例：短い言葉を事前にメモする"></textarea></div>
+              </div>
+            </section>
+          </div>
+
+          <div class="action-footer">
+            <div><button id="clear-action-button" class="danger-text-button" type="button">行動計画を消去</button><p id="action-status" class="form-status" role="status" aria-live="polite"></p></div>
+            <button class="primary-button form-submit" type="submit">行動計画を確認 <span aria-hidden="true">✓</span></button>
+          </div>
+        </form>
       </section>
     </main>
 
