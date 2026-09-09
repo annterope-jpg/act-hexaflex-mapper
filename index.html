@@ -419,9 +419,36 @@
 
           <div class="action-footer">
             <div><button id="clear-action-button" class="danger-text-button" type="button">行動計画を消去</button><p id="action-status" class="form-status" role="status" aria-live="polite"></p></div>
-            <button class="primary-button form-submit" type="submit">行動計画を確認 <span aria-hidden="true">✓</span></button>
+            <div class="action-footer-buttons">
+              <button id="summary-start-button" class="secondary-button" type="button">まとめを見る</button>
+              <button class="primary-button form-submit" type="submit">行動計画を確認 <span aria-hidden="true">✓</span></button>
+            </div>
           </div>
         </form>
+      </section>
+
+      <section id="summary-view" class="summary-view" aria-labelledby="summary-title" hidden>
+        <div class="case-header no-print">
+          <button id="summary-back-button" class="text-button" type="button">← 行動計画へ戻る</button>
+          <button id="print-button" class="primary-button print-button" type="button">印刷する <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <article class="print-sheet">
+          <header class="summary-header">
+            <div>
+              <p class="eyebrow">ACT Hexaflex Mapper</p>
+              <h1 id="summary-title" tabindex="-1">ケースの共同検討メモ</h1>
+              <p>診断や治療方針の決定ではなく、本人との共同検討のための一時的な整理です。</p>
+            </div>
+            <div class="summary-case-id"><span>匿名ケースID</span><strong id="summary-case-id">未入力</strong></div>
+          </header>
+
+          <div id="summary-content" class="summary-content"></div>
+
+          <footer class="summary-footer">
+            <p>このまとめには匿名・架空ケースのみを記載してください。観察事実と仮説は区別し、本人との確認を前提に扱います。</p>
+          </footer>
+        </article>
       </section>
     </main>
 

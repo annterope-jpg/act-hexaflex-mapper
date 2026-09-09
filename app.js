@@ -34,6 +34,11 @@ const valuedDirection = document.querySelector("#valued-direction");
 const smallAction = document.querySelector("#small-action");
 const clearActionButton = document.querySelector("#clear-action-button");
 const actionStatus = document.querySelector("#action-status");
+const summaryView = document.querySelector("#summary-view");
+const summaryStartButton = document.querySelector("#summary-start-button");
+const summaryBackButton = document.querySelector("#summary-back-button");
+const printButton = document.querySelector("#print-button");
+const summaryContent = document.querySelector("#summary-content");
 const mapDraft = new Map();
 let activeProcessId = "acceptance";
 
@@ -89,6 +94,7 @@ function showWorkspace() {
   caseView.hidden = true;
   mapView.hidden = true;
   actionView.hidden = true;
+  summaryView.hidden = true;
   workspaceView.hidden = false;
   document.title = "準備完了 | ACT Hexaflex Mapper";
   workspaceView.querySelector("h1").focus({ preventScroll: true });
@@ -100,6 +106,7 @@ function showWelcome() {
   caseView.hidden = true;
   mapView.hidden = true;
   actionView.hidden = true;
+  summaryView.hidden = true;
   welcomeView.hidden = false;
   document.title = "ACT Hexaflex Mapper";
   startButton.focus({ preventScroll: true });
@@ -111,6 +118,7 @@ function showCaseForm() {
   workspaceView.hidden = true;
   mapView.hidden = true;
   actionView.hidden = true;
+  summaryView.hidden = true;
   caseView.hidden = false;
   document.title = "匿名ケース概要 | ACT Hexaflex Mapper";
   document.querySelector("#case-title").focus({ preventScroll: true });
@@ -245,6 +253,7 @@ function showMap() {
   caseView.hidden = true;
   mapView.hidden = false;
   actionView.hidden = true;
+  summaryView.hidden = true;
   renderMapNavigation();
   selectMapProcess(activeProcessId);
   updateMapProgress();
@@ -268,6 +277,7 @@ function showActionPlan() {
   caseView.hidden = true;
   mapView.hidden = true;
   actionView.hidden = false;
+  summaryView.hidden = true;
   document.title = "価値に沿った行動計画 | ACT Hexaflex Mapper";
   document.querySelector("#action-title").focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: "instant" });
@@ -304,6 +314,121 @@ function clearActionPlan() {
   valuedDirection.focus();
 }
 
+function addSummarySection(title, entries) {
+  const section = document.createElement("section");
+  section.className = "summary-section";
+  const heading = document.createElement("h2");
+  heading.textContent = title;
+  const list = document.createElement("dl");
+  let hasEntry = false;
+
+  entries.forEach(([label, value, kind]) => {
+    if (!value || !value.trim()) return;
+    hasEntry = true;
+    const item = document.createElement("div");
+    if (kind) item.className = `summary-entry summary-entry-${kind}`;
+    const term = document.createElement("dt");
+    const description = document.createElement("dd");
+    term.textContent = label;
+    description.textContent = value.trim();
+    item.append(term, description);
+    list.append(item);
+  });
+
+  section.append(heading, list);
+  if (!hasEntry) {
+    const empty = document.createElement("p");
+    empty.className = "summary-empty";
+    empty.textContent = "この項目にはまだ入力がありません。";
+    section.append(empty);
+  }
+  summaryContent.append(section);
+}
+
+function renderSummary() {
+  saveActiveProcess();
+  summaryContent.replaceChildren();
+  document.querySelector("#summary-case-id").textContent = caseIdInput.value.trim() || "未入力";
+
+  addSummarySection("ケース概要", [
+    ["検討する場面・文脈", document.querySelector("#case-context").value],
+    ["本人の言葉", document.querySelector("#client-words").value, "client"],
+    ["観察した事実", document.querySelector("#observations").value, "observation"],
+    ["支援者の仮説", document.querySelector("#hypotheses").value, "hypothesis"],
+    ["望む変化・大切にしたい方向", document.querySelector("#desired-change").value]
+  ]);
+
+  const mapSection = document.createElement("section");
+  mapSection.className = "summary-section";
+  const mapHeading = document.createElement("h2");
+  mapHeading.textContent = "ヘキサフレックス・マップ";
+  const mapList = document.createElement("div");
+  mapList.className = "summary-map-list";
+  let hasMap = false;
+  ACT_DATA.processes.forEach((process) => {
+    const draft = getProcessDraft(process.id);
+    if (!draft.observation.trim() && !draft.hypothesis.trim()) return;
+    hasMap = true;
+    const item = document.createElement("article");
+    const title = document.createElement("h3");
+    title.textContent = process.name;
+    const details = document.createElement("dl");
+    if (draft.observation.trim()) {
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = "観察した事実";
+      description.textContent = draft.observation.trim();
+      details.append(term, description);
+    }
+    if (draft.hypothesis.trim()) {
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = "支援者の仮説";
+      description.textContent = draft.hypothesis.trim();
+      details.append(term, description);
+    }
+    if (draft.relations.length) {
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = "関連する視点";
+      description.textContent = draft.relations.map((id) => ACT_DATA.processes.find((item) => item.id === id)?.name).filter(Boolean).join("、");
+      details.append(term, description);
+    }
+    item.append(title, details);
+    mapList.append(item);
+  });
+  mapSection.append(mapHeading, mapList);
+  if (!hasMap) {
+    const empty = document.createElement("p");
+    empty.className = "summary-empty";
+    empty.textContent = "マッピングされたプロセスはまだありません。";
+    mapSection.append(empty);
+  }
+  summaryContent.append(mapSection);
+
+  addSummarySection("価値に沿った行動計画", [
+    ["価値・大切にしたいあり方", valuedDirection.value, "client"],
+    ["試してみる行動", smallAction.value, "observation"],
+    ["いつ・どこで", document.querySelector("#action-when").value],
+    ["予想される感情・思考・状況", document.querySelector("#expected-barrier").value, "hypothesis"],
+    ["役立ちそうな支援・工夫", document.querySelector("#helpful-support").value],
+    ["振り返る時期", document.querySelector("#review-when").value]
+  ]);
+}
+
+function showSummary() {
+  renderSummary();
+  welcomeView.hidden = true;
+  workspaceView.hidden = true;
+  caseView.hidden = true;
+  mapView.hidden = true;
+  actionView.hidden = true;
+  summaryView.hidden = false;
+  document.title = "ケースの共同検討メモ | ACT Hexaflex Mapper";
+  document.querySelector("#summary-title").focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
 agreementCheckbox.addEventListener("change", updateAgreementState);
 startButton.addEventListener("click", showWorkspace);
 returnButton.addEventListener("click", showWelcome);
@@ -326,6 +451,9 @@ actionStartButton.addEventListener("click", showActionPlan);
 actionBackButton.addEventListener("click", showMap);
 actionForm.addEventListener("submit", handleActionSubmit);
 clearActionButton.addEventListener("click", clearActionPlan);
+summaryStartButton.addEventListener("click", showSummary);
+summaryBackButton.addEventListener("click", showActionPlan);
+printButton.addEventListener("click", () => window.print());
 [valuedDirection, smallAction].forEach((field) => {
   field.addEventListener("input", () => {
     const counter = document.querySelector(`#${field.id}-count`);
